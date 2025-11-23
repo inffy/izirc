@@ -37,11 +37,11 @@ sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME="iZirc"/' /usr/lib/os-release
 sed -i 's/^ID=.*/ID=izirc/' /usr/lib/os-release
 sed -i '/^HOME_URL=/d' /usr/lib/os-release
 echo 'HOME_URL="https://github.com/'"${GITHUB_REPOSITORY:-inffy/izirc}"'"' >> /usr/lib/os-release
-# sed -i '/^DOCUMENTATION_URL=/d' /usr/lib/os-release
-# echo 'DOCUMENTATION_URL="https://github.com/'"${GITHUB_REPOSITORY:-yourusername/izirc}"'"' >> /usr/lib/os-release
-# sed -i '/^SUPPORT_URL=/d' /usr/lib/os-release
-# echo 'SUPPORT_URL="https://github.com/'"${GITHUB_REPOSITORY:-yourusername/izirc}"'/issues"' >> /usr/lib/os-release
-# sed -i '/^BUG_REPORT_URL=/d' /usr/lib/os-release
-# echo 'BUG_REPORT_URL="https://github.com/'"${GITHUB_REPOSITORY:-yourusername/izirc}"'/issues"' >> /usr/lib/os-release
-# sed -i '/^LOGO=/d' /usr/lib/os-release
+sed -i '/^DOCUMENTATION_URL=/d' /usr/lib/os-release
+echo 'DOCUMENTATION_URL="https://github.com/'"${GITHUB_REPOSITORY:-inffy/izirc}"'"' >> /usr/lib/os-release
+sed -i '/^SUPPORT_URL=/d' /usr/lib/os-release
+echo 'SUPPORT_URL="https://github.com/'"${GITHUB_REPOSITORY:-inffy/izirc}"'/issues"' >> /usr/lib/os-release
+sed -i '/^BUG_REPORT_URL=/d' /usr/lib/os-release
+echo 'BUG_REPORT_URL="https://github.com/'"${GITHUB_REPOSITORY:-inffy/izirc}"'/issues"' >> /usr/lib/os-release
+sed -i '/^LOGO=/d' /usr/lib/os-release
 # echo 'LOGO="izirc"' >> /usr/lib/os-release
