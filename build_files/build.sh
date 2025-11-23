@@ -33,7 +33,7 @@ systemctl enable podman.socket
 # The canonical file is /usr/lib/os-release (symlinked from /etc/os-release)
 
 sed -i 's/^NAME=.*/NAME="iZirc"/' /usr/lib/os-release
-sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME="iZirc (Based on Zirconium)"/' /usr/lib/os-release
+sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME="iZirc"/' /usr/lib/os-release
 sed -i 's/^ID=.*/ID=izirc/' /usr/lib/os-release
 sed -i '/^HOME_URL=/d' /usr/lib/os-release
 echo 'HOME_URL="https://github.com/'"${GITHUB_REPOSITORY:-inffy/izirc}"'"' >> /usr/lib/os-release
