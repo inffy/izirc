@@ -12,6 +12,11 @@ set -ouex pipefail
 # this installs a package from fedora repos
 dnf5 install -y zsh
 
+### Configure dracut for Plymouth
+# Copy dracut configuration to include Plymouth in initramfs
+mkdir -p /etc/dracut.conf.d
+cp /ctx/dracut.conf.d/plymouth.conf /etc/dracut.conf.d/
+
 # Use a COPR Example:
 #
 # dnf5 -y copr enable ublue-os/staging
