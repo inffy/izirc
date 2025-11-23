@@ -38,6 +38,11 @@ dnf5 -y install --enablerepo="copr:copr.fedorainfracloud.org:ublue-os:packages" 
 mkdir -p /etc/dracut.conf.d
 cp /ctx/dracut.conf.d/plymouth.conf /etc/dracut.conf.d/
 
+### Configure polkit for bootc
+# Allow wheel group users to run bootc commands without sudo
+mkdir -p /usr/share/polkit-1/rules.d
+cp /ctx/polkit-1/rules.d/49-bootc-nopasswd.rules /usr/share/polkit-1/rules.d/
+
 # Use a COPR Example:
 #
 # dnf5 -y copr enable ublue-os/staging
