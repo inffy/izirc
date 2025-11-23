@@ -58,7 +58,7 @@ systemctl enable podman.socket
 # The canonical file is /usr/lib/os-release (symlinked from /etc/os-release)
 
 sed -i 's/^NAME=.*/NAME="iZirc"/' /usr/lib/os-release
-sed -i 's/^PRETTY_NAME=.*/PRETTY_NAME="iZirc"/' /usr/lib/os-release
+sed -i "s|^PRETTY_NAME=.*|PRETTY_NAME=\"${IMAGE_PRETTY_NAME:-iZirc}\"|" /usr/lib/os-release
 sed -i 's/^ID=.*/ID=izirc/' /usr/lib/os-release
 sed -i '/^VERSION=/d' /usr/lib/os-release
 sed -i '/^VARIANT=/d' /usr/lib/os-release
@@ -74,3 +74,10 @@ sed -i '/^BUG_REPORT_URL=/d' /usr/lib/os-release
 echo 'BUG_REPORT_URL="https://github.com/'"${GITHUB_REPOSITORY:-inffy/izirc}"'/issues"' >> /usr/lib/os-release
 sed -i '/^LOGO=/d' /usr/lib/os-release
 # echo 'LOGO="izirc"' >> /usr/lib/os-release
+sed -i '/^REDHAT_BUGZILLA_PRODUCT=/d' /usr/lib/os-release
+sed -i '/^REDHAT_BUGZILLA_PRODUCT_VERSION=/d' /usr/lib/os-release
+sed -i '/^REDHAT_SUPPORT_PRODUCT=/d' /usr/lib/os-release
+sed -i '/^REDHAT_SUPPORT_PRODUCT_VERSION=/d' /usr/lib/os-release
+sed -i '/^SUPPORT_END=/d' /usr/lib/os-release
+sed -i '/^VENDOR_NAME=/d' /usr/lib/os-release
+sed -i '/^VENDOR_URL=/d' /usr/lib/os-release
