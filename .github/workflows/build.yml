@@ -46,19 +46,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
 
-      # You only use this action if the container-storage-action proves to be unreliable, you don't need to enable both
-      # This is optional, but if you see that your builds are way too big for the runners, you can enable this by uncommenting the following lines:
-      # - name: Maximize build space
-      #   uses: ublue-os/remove-unwanted-software@695eb75bc387dbcd9685a8e72d23439d8686cba6
-      #   with:
-      #     remove-codeql: true
+      - name: Get current space
+        run: |
+          df -h
 
-      - name: Mount BTRFS for podman storage
+      - name: Maximize build space
         id: container-storage-action
         uses: ublue-os/container-storage-action@911baca08baf30c8654933e9e9723cb399892140
-
-        # Fallback to the remove-unwanted-software-action if github doesn't allocate enough space
-        # See: https://github.com/ublue-os/container-storage-action/pull/11
         continue-on-error: true
         with:
           target-dir: /var/lib/containers
@@ -108,40 +102,37 @@ jobs:
 
       - name: Build Image
         id: build_image
-        uses: redhat-actions/buildah-build@7a95fa7ee0f02d552a32753e7414641a04307056 # v2
-        with:
-          containerfiles: |
-            ./Containerfile
-          # Postfix image name with -custom to make it a little more descriptive
-          # Syntax: https://docs.github.com/en/actions/learn-github-actions/expressions#format
-          image: ${{ env.IMAGE_NAME }}
-          tags: ${{ steps.metadata.outputs.tags }}
-          labels: ${{ steps.metadata.outputs.labels }}
-          oci: false
+        run: |
+          sudo podman build -t "localhost/${{env.IMAGE_NAME}}:${{env.DEFAULT_TAG}}" -f ./Containerfile .
 
-      # Rechunk is a script that we use on Universal Blue to make sure there isnt a single huge layer when your image gets published.
-      # This does not make your image faster to download, just provides better resumability and fixes a few errors.
-      # Documentation for Rechunk is provided on their github repository at https://github.com/hhd-dev/rechunk
-      # You can enable it by uncommenting the following lines:
-      # - name: Run Rechunker
-      #   id: rechunk
-      #   uses: hhd-dev/rechunk@f153348d8100c1f504dec435460a0d7baf11a9d2 # v1.1.1
-      #   with:
-      #     rechunk: 'ghcr.io/hhd-dev/rechunk:v1.0.1'
-      #     ref: "localhost/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}"
-      #     prev-ref: "${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}"
-      #     skip_compression: true
-      #     version: ${{ env.CENTOS_VERSION }}
-      #     labels: ${{ steps.metadata.outputs.labels }} # Rechunk strips out all the labels during build, this needs to be reapplied here with newline separator
+      - name: Rechunk Image
+        id: rechunker
+        run: |
+          sudo podman run --rm \
+            --privileged \
+            -v /var/lib/containers:/var/lib/containers \
+            "quay.io/fedora/fedora-bootc:rawhide" \
+            /usr/libexec/bootc-base-imagectl rechunk --max-layers 512 \
+                localhost/${{env.IMAGE_NAME}}:${{env.DEFAULT_TAG}} \
+                localhost/${{env.IMAGE_NAME}}:${{env.DEFAULT_TAG}}
 
-      # This is necessary so that the podman socket can find the rechunked image on its storage
-      # - name: Load in podman and tag
-      #   run: |
-      #     IMAGE=$(podman pull ${{ steps.rechunk.outputs.ref }})
-      #     sudo rm -rf ${{ steps.rechunk.outputs.output }}
-      #     for tag in ${{ steps.metadata.outputs.tags }}; do
-      #       podman tag $IMAGE ${{ env.IMAGE_NAME }}:$tag
-      #     done
+      - name: tag
+        id: tag
+        env:
+          TAG_LIST: ${{ steps.metadata.outputs.tags }}
+
+        run: |
+          for tag in $TAG_LIST; do
+            sudo podman tag \
+              localhost/${{env.IMAGE_NAME}}:${{env.DEFAULT_TAG}} \
+              localhost/${{env.IMAGE_NAME}}:$tag
+          done
+
+      - name: debug images
+        id: debug
+        run: |
+          sudo podman images
+          podman images
 
       # These `if` statements are so that pull requests for your custom images do not make it publish any packages under your name without you knowing
       # They also check if the runner is on the default branch so that things like the merge queue (if you enable it), are going to work
@@ -152,6 +143,20 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Workaround bug where capital letters in your GitHub username make it impossible to push to GHCR.
+      # https://github.com/macbre/push-to-ghcr/issues/12
+      - name: Lowercase Registry
+        id: registry_case
+        uses: ASzc/change-string-case-action@d0603cd0a7dd490be678164909f65c7737470a7f # v6
+        with:
+          string: ${{ env.IMAGE_REGISTRY }}
+
+      - name: Lowercase Image
+        id: image_case
+        uses: ASzc/change-string-case-action@d0603cd0a7dd490be678164909f65c7737470a7f # v6
+        with:
+          string: ${{ env.IMAGE_NAME }}
 
       - name: Push To GHCR
         uses: redhat-actions/push-to-registry@5ed88d269cf581ea9ef6dd6806d01562096bee9c # v2
