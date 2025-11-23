@@ -1,11 +1,12 @@
+# Base Image - ARGs must be declared before FROM
+ARG BASE_IMAGE_NAME=ghcr.io/zirconium-dev/zirconium
+ARG BASE_IMAGE_TAG=latest
+ARG BASE_IMAGE_DIGEST=sha256:c63c89046989286faa0b1a391bc8b23efa0b6cc8505195f293d0b50a7177c370
+
 # Allow build scripts to be referenced without being copied into the final image
 FROM scratch AS ctx
 COPY build_files /
 
-# Base Image
-ARG BASE_IMAGE_NAME=ghcr.io/zirconium-dev/zirconium
-ARG BASE_IMAGE_TAG=latest
-ARG BASE_IMAGE_DIGEST=sha256:c63c89046989286faa0b1a391bc8b23efa0b6cc8505195f293d0b50a7177c370
 FROM ${BASE_IMAGE_NAME}:${BASE_IMAGE_TAG}@${BASE_IMAGE_DIGEST}
 
 ## Other possible base images include:
