@@ -12,6 +12,27 @@ set -ouex pipefail
 # this installs a package from fedora repos
 dnf5 install -y zsh
 
+# Install virt-manager stuff
+dnf5 install y \
+    virt-manager \
+    libvirt-daemon-kvm \
+    qemu-kvm \
+    libvirt-client \
+    virt-install \
+    bridge-utils \
+    virt-viewer \
+    libguestfs-tools \
+    spice-client-gtk \
+    open-vm-tools \
+    qemu-guest-agent \
+    virt-install
+
+# libvirt workarounds
+dnf5 -y copr enable ublue-os/packages
+dnf5 -y copr disable ublue-os/packages
+dnf5 -y install --enablerepo="copr:copr.fedorainfracloud.org:ublue-os:packages" --setopt=install_weak_deps=False \
+    ublue-os-libvirt-workarounds
+
 ### Configure dracut for Plymouth
 # Copy dracut configuration to include Plymouth in initramfs
 mkdir -p /etc/dracut.conf.d
