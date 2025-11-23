@@ -40,8 +40,8 @@ cp /ctx/dracut.conf.d/plymouth.conf /etc/dracut.conf.d/
 
 ### Configure polkit for bootc
 # Allow wheel group users to run bootc commands without sudo
-mkdir -p /usr/share/polkit-1/rules.d
-cp /ctx/polkit-1/rules.d/49-bootc-nopasswd.rules /usr/share/polkit-1/rules.d/
+mkdir -p /etc/polkit-1/rules.d
+cp /ctx/polkit-1/rules.d/49-bootc-nopasswd.rules /etc/polkit-1/rules.d/
 
 # Use a COPR Example:
 #
