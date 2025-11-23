@@ -24,7 +24,7 @@ This repository builds a custom bootc (Boot Container) image based on [Zirconium
 ### Configuration Files
 
 - **`disk_config/disk.toml`**: Configuration for generating QCOW2/RAW disk images.
-- **`disk_config/iso.toml`**: Configuration for generating ISO installation images.
+- **`disk_config/iso-gnome.toml`** and **`disk_config/iso-kde.toml`**: Configuration files for generating ISO installation images with GNOME or KDE desktop environments. Note: The Justfile currently references `disk_config/iso.toml` which doesn't exist.
 - **`build_files/dracut.conf.d/`**: Dracut configuration files for initramfs generation.
 
 ### CI/CD
@@ -129,7 +129,10 @@ just build-raw
 
 ### Modifying Disk Image Configuration
 
-1. Edit `disk_config/disk.toml` or `disk_config/iso.toml` as appropriate.
+1. Edit the appropriate configuration file:
+   - `disk_config/disk.toml` for QCOW2/RAW images
+   - `disk_config/iso-gnome.toml` or `disk_config/iso-kde.toml` for ISO images
+   - Note: You may need to create `disk_config/iso.toml` or update the Justfile to reference the correct ISO config file.
 2. Rebuild the disk image with `just rebuild-qcow2`, `just rebuild-iso`, etc.
 3. Test with `just run-vm-qcow2` or `just spawn-vm`.
 
