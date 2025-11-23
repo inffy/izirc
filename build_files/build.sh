@@ -39,6 +39,7 @@ sed -i '/^VERSION=/d' /usr/lib/os-release
 sed -i '/^VARIANT=/d' /usr/lib/os-release
 sed -i '/^VARIANT_ID=/d' /usr/lib/os-release
 sed -i '/^HOME_URL=/d' /usr/lib/os-release
+sed -i '/^CPE_NAME=/d' /usr/lib/os-release
 echo 'HOME_URL="https://github.com/'"${GITHUB_REPOSITORY:-inffy/izirc}"'"' >> /usr/lib/os-release
 sed -i '/^DOCUMENTATION_URL=/d' /usr/lib/os-release
 echo 'DOCUMENTATION_URL="https://github.com/'"${GITHUB_REPOSITORY:-inffy/izirc}"'"' >> /usr/lib/os-release
