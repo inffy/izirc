@@ -6,6 +6,17 @@
 
   "rebaseWhen": "never",
 
+  "regexManagers": [
+    {
+      "fileMatch": ["^image-version\\.yml$"],
+      "matchStrings": [
+        "name:\\s+(?<depName>ghcr\\.io/zirconium-dev/zirconium)\\s+tag:\\s+(?<currentValue>[^\\s]+)\\s+digest:\\s+(?<currentDigest>sha256:[a-f0-9]+)"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker"
+    }
+  ],
+
   "packageRules": [
     {
       "automerge": true,
@@ -17,5 +28,12 @@
       "matchDepTypes": ["container"],
       "matchFileNames": [".github/workflows/**.yaml", ".github/workflows/**.yml"],
     },
+    {
+      "automerge": true,
+      "matchUpdateTypes": ["digest", "major", "minor", "patch"],
+      "matchDepNames": ["ghcr.io/zirconium-dev/zirconium"],
+      "matchFileNames": ["image-version.yml"],
+      "pinDigests": true
+    }
   ]
 }

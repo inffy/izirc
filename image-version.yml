@@ -1,0 +1,6 @@
+# Base image configuration for izirc
+# This file is automatically updated by Renovate
+base-image:
+  name: ghcr.io/zirconium-dev/zirconium
+  tag: latest
+  digest: sha256:c63c89046989286faa0b1a391bc8b23efa0b6cc8505195f293d0b50a7177c370
