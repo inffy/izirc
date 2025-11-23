@@ -1,5 +1,6 @@
 // Allow users in the wheel group to run bootc commands without password
-// This enables bootc status and bootc update to be run without sudo
+// This enables bootc status, bootc update, and other bootc operations without sudo
+// Only affects administrative users (wheel group members)
 
 polkit.addRule(function(action, subject) {
     if ((action.id == "org.containers.bootc" ||
