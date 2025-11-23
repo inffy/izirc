@@ -13,7 +13,7 @@ set -ouex pipefail
 dnf5 install -y zsh
 
 # Install virt-manager stuff
-dnf5 install y \
+dnf5 install -y \
     virt-manager \
     libvirt-daemon-kvm \
     qemu-kvm \
