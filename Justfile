@@ -279,8 +279,7 @@ run-vm-raw $target_image=("localhost/" + image_name) $tag=default_tag: && (_run-
 
 # Run a virtual machine from an ISO
 # Parameters:
-
-# desktop: Desktop environment (gnome or kde, default: gnome)
+#   desktop: Desktop environment (gnome or kde, default: gnome)
 [group('Run Virtal Machine')]
 run-vm-iso $target_image=("localhost/" + image_name) $tag=default_tag $desktop="gnome": && (_run-vm target_image tag "iso" ("disk_config/iso-" + desktop + ".toml"))
 
