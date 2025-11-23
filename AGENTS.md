@@ -163,3 +163,17 @@ Before submitting changes:
 - The root filesystem is **immutable** (read-only).
 - System changes are made by building a new image, not by modifying the running system.
 - User data and configuration persist in `/home`, `/etc`, and `/var`.
+
+## Attribution Requirements
+
+AI agents must disclose what tool and model they are using in the "Assisted-by" commit footer:
+
+```text
+Assisted-by: [Model Name] via [Tool Name]
+```
+
+Example:
+
+```text
+Assisted-by: Claude 3.5 Sonnet via GitHub Copilot
+```
