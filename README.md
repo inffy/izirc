@@ -14,3 +14,5 @@ You need to have a Fedora based atomic image, recommend installing Bluefin first
 sudo bootc switch --enforce-container-sigpolicy ghcr.io/inffy/izirc:latest
 ```
 After switching, reboot your system to start using iZirc.
+## Screenshot
+<img width="2880" height="1918" alt="image" src="https://github.com/user-attachments/assets/9dae1fcc-e206-4c2f-a105-54638a272451" />
