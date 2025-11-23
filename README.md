@@ -1,5 +1,5 @@
 # iZirc - my custom image based on Zirconium
-iZirc is a custom Linux distribution based on Zirconium, designed to provide a lightweight and efficient operating system for everyday use. It includes a curated selection of software and optimizations to enhance performance and user experience.
+iZirc is a custom Linux distribution based on [Zirconium](https://github.com/zirconium-dev/zirconium), designed to provide a lightweight and efficient operating system for everyday use. It includes a curated selection of software and optimizations to enhance performance and user experience.
 
 ## Features
 - Lightweight and fast
