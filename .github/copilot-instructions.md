@@ -8,7 +8,7 @@ This repository builds a custom bootc (Boot Container) image based on [Zirconium
 
 - **Container Technology**: Podman/Docker for building OCI images
 - **Build System**: Justfile for task automation
-- **Base Image**: `ghcr.io/zirconium-dev/zirconium:latest`
+- **Base Image**: `ghcr.io/zirconium-dev/zirconium:latest` (pinned by digest in Containerfile)
 - **Package Manager**: DNF5 (Fedora's next-generation package manager)
 - **Boot Technology**: bootc (Boot Container) for creating bootable images
 - **CI/CD**: GitHub Actions
@@ -133,7 +133,7 @@ just build-raw
 1. Edit the appropriate configuration file:
    - `disk_config/disk.toml` for QCOW2/RAW images
    - `disk_config/iso-gnome.toml` or `disk_config/iso-kde.toml` for ISO images
-   - **Important**: The build scripts expect `disk_config/iso.toml` to exist. Consider creating it as a symlink to your preferred desktop environment config (e.g., `ln -s iso-gnome.toml disk_config/iso.toml`).
+   - **Important**: The build scripts expect `disk_config/iso.toml` to exist. Consider creating it as a symlink to your preferred desktop environment config (e.g., `cd disk_config && ln -s iso-gnome.toml iso.toml`).
 2. Rebuild the disk image with `just rebuild-qcow2`, `just rebuild-iso`, etc.
 3. Test with `just run-vm-qcow2` or `just spawn-vm`.
 
