@@ -22,7 +22,6 @@ dnf5 install -y \
     bridge-utils \
     virt-viewer \
     libguestfs-tools \
-    spice-client-gtk \
     open-vm-tools \
     qemu-guest-agent \
     virt-install
