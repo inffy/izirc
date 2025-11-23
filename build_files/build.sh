@@ -53,7 +53,7 @@ systemctl enable podman.socket
 # The canonical file is /usr/lib/os-release (symlinked from /etc/os-release)
 
 sed -i 's/^NAME=.*/NAME="iZirc"/' /usr/lib/os-release
-sed -i "s|^PRETTY_NAME=.*|PRETTY_NAME=\"${IMAGE_PRETTY_NAME}"|" /usr/lib/os-release
+sed -i "s|^PRETTY_NAME=.*|PRETTY_NAME=\"${IMAGE_PRETTY_NAME}\"|" /usr/lib/os-release
 sed -i 's/^ID=.*/ID=izirc/' /usr/lib/os-release
 sed -i '/^VERSION=/d' /usr/lib/os-release
 sed -i '/^VARIANT=/d' /usr/lib/os-release
