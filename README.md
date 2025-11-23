@@ -6,7 +6,7 @@ iZirc is a custom Linux distribution based on Zirconium, designed to provide a l
 - Custom software selection (currently just zsh added lol)
 - Optimized for performance
 - User-friendly interface (Niri + DMS)
-- Unprivileged bootc commands - users in the wheel group can run `bootc status` and `bootc update` without sudo
+- Passwordless bootc commands - users in the wheel group can run bootc operations with sudo but without entering a password
 
 ## Installation
 You need to have a Fedora based atomic image, recommend installing Bluefin first and then use bootc to rebase to iZirc.
@@ -17,16 +17,19 @@ sudo bootc switch --enforce-container-sigpolicy ghcr.io/inffy/izirc:latest
 After switching, reboot your system to start using iZirc.
 
 ## Managing Updates
-iZirc allows users in the wheel group (administrative users) to manage system updates without needing to use `sudo`:
+iZirc allows users in the wheel group (administrative users) to manage system updates using sudo without entering a password:
 
 ```bash
 # Check system status
-bootc status
+sudo bootc status
 
 # Update to the latest version
-bootc update
+sudo bootc update
+
+# Upgrade to a new version
+sudo bootc upgrade
 ```
 
-These commands work without sudo for users in the wheel group, making system management more convenient while maintaining security.
+These commands require `sudo` but won't prompt for a password for users in the wheel group, making system management more convenient while maintaining security.
 ## Screenshot
 <img width="2880" height="1918" alt="image" src="https://github.com/user-attachments/assets/9dae1fcc-e206-4c2f-a105-54638a272451" />

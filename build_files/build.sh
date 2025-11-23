@@ -38,10 +38,12 @@ dnf5 -y install --enablerepo="copr:copr.fedorainfracloud.org:ublue-os:packages" 
 mkdir -p /etc/dracut.conf.d
 cp /ctx/dracut.conf.d/plymouth.conf /etc/dracut.conf.d/
 
-### Configure polkit for bootc
-# Allow wheel group users to run bootc commands without sudo
-mkdir -p /usr/share/polkit-1/rules.d
-cp /ctx/polkit-1/rules.d/49-bootc-nopasswd.rules /usr/share/polkit-1/rules.d/
+### Configure sudoers for bootc
+# Allow wheel group users to run bootc commands with sudo but without password
+mkdir -p /etc/sudoers.d
+cp /ctx/sudoers.d/001-bootc /etc/sudoers.d/
+chmod 0440 /etc/sudoers.d/001-bootc
+
 
 # Use a COPR Example:
 #
