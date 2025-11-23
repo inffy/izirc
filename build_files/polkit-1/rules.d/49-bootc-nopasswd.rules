@@ -1,0 +1,11 @@
+// Allow users in the wheel group to run bootc commands without sudo
+// This enables bootc status, bootc update, and other bootc operations to be run directly
+// Only affects administrative users (wheel group members)
+
+polkit.addRule(function(action, subject) {
+    if ((action.id == "org.containers.bootc" ||
+         action.id.indexOf("org.containers.bootc.") === 0) &&
+        subject.isInGroup("wheel")) {
+        return polkit.Result.YES;
+    }
+});
